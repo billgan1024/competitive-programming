@@ -1,0 +1,28 @@
+#include <bits/stdc++.h>
+#include <ext/pb_ds/assoc_container.hpp>
+using namespace __gnu_pbds;
+using namespace std;
+#define INF 0x3f
+#define sp ' '
+#define nl '\n'
+#define pb push_back
+#define clz __builtin_clz
+#define popcnt __builtin_popcount
+#define ms(x, y) memset(x, y, sizeof(x))
+#define sz(x) (int)x.size()
+#define fl() cout << flush
+#define scln(x) getline(cin, x)
+void sc(){}template<class T, class...A> void sc(T&t, A&...a) { cin >> t, sc(a...); }
+void pr(){}template<class T, class...A> void pr(T t, A...a) { cout << t, pr(a...); }
+typedef long long ll;
+typedef pair<int, int> pii;
+
+int h, w; string s[100];
+int main()
+{
+    cin.sync_with_stdio(0); cin.tie(0); sc(h, w);
+    for(int i = 0; i < h; i++) sc(s[i]);
+    for(int i = 0; i < w+2; i++) pr("#"); pr(nl);
+    for(int i = 0; i < h; i++) pr("#", s[i], "#", nl);
+    for(int i = 0; i < w+2; i++) pr("#"); pr(nl);
+}
