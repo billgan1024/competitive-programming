@@ -1,8 +1,0 @@
-C:/Users/billg/Documents/Competitive Programming/CCC/cmake-build-debug/CMakeFiles/s1.dir
-C:/Users/billg/Documents/Competitive Programming/CCC/cmake-build-debug/CMakeFiles/s3.dir
-C:/Users/billg/Documents/Competitive Programming/CCC/cmake-build-debug/CMakeFiles/template.dir
-C:/Users/billg/Documents/Competitive Programming/CCC/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/billg/Documents/Competitive Programming/CCC/cmake-build-debug/CMakeFiles/s2.dir
-C:/Users/billg/Documents/Competitive Programming/CCC/cmake-build-debug/CMakeFiles/s4.dir
-C:/Users/billg/Documents/Competitive Programming/CCC/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-C:/Users/billg/Documents/Competitive Programming/CCC/cmake-build-debug/CMakeFiles/s5.dir

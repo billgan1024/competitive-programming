@@ -50,7 +50,8 @@ ll query(int idx) {
 
 int main()
 {
-    cin.sync_with_stdio(0); cin.tie(0); sc(n);
+    cin.sync_with_stdio(0); cin.tie(0); cout.setf(ios::unitbuf);
+    sc(n);
     for (int i = 1; i <= n; i++) {
         sc(a[i]);
         upd(i, a[i]);
