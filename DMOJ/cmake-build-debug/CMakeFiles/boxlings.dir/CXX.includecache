@@ -1,0 +1,14 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/billg/Documents/Competitive Programming/DMOJ/jan24/boxlings.cpp
+bits/stdc++.h
+-
+ext/pb_ds/assoc_container.hpp
+-
+

@@ -1,0 +1,4 @@
+C:/Users/billg/Documents/Competitive Programming/Codeforces/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+C:/Users/billg/Documents/Competitive Programming/Codeforces/cmake-build-debug/CMakeFiles/other.dir
+C:/Users/billg/Documents/Competitive Programming/Codeforces/cmake-build-debug/CMakeFiles/test.dir
+C:/Users/billg/Documents/Competitive Programming/Codeforces/cmake-build-debug/CMakeFiles/edit_cache.dir

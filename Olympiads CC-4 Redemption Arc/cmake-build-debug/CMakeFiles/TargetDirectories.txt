@@ -1,0 +1,17 @@
+D:/Documents/Competitive Programming/Olympiads CC-4 Redemption Arc/cmake-build-debug/CMakeFiles/sorting.dir
+D:/Documents/Competitive Programming/Olympiads CC-4 Redemption Arc/cmake-build-debug/CMakeFiles/vudu.dir
+D:/Documents/Competitive Programming/Olympiads CC-4 Redemption Arc/cmake-build-debug/CMakeFiles/victormakesbank.dir
+D:/Documents/Competitive Programming/Olympiads CC-4 Redemption Arc/cmake-build-debug/CMakeFiles/aromanticdinner.dir
+D:/Documents/Competitive Programming/Olympiads CC-4 Redemption Arc/cmake-build-debug/CMakeFiles/exercisedeadlines.dir
+D:/Documents/Competitive Programming/Olympiads CC-4 Redemption Arc/cmake-build-debug/CMakeFiles/shopping.dir
+D:/Documents/Competitive Programming/Olympiads CC-4 Redemption Arc/cmake-build-debug/CMakeFiles/test.dir
+D:/Documents/Competitive Programming/Olympiads CC-4 Redemption Arc/cmake-build-debug/CMakeFiles/stogovi.dir
+D:/Documents/Competitive Programming/Olympiads CC-4 Redemption Arc/cmake-build-debug/CMakeFiles/powersum.dir
+D:/Documents/Competitive Programming/Olympiads CC-4 Redemption Arc/cmake-build-debug/CMakeFiles/esdeath.dir
+D:/Documents/Competitive Programming/Olympiads CC-4 Redemption Arc/cmake-build-debug/CMakeFiles/skyscrapers.dir
+D:/Documents/Competitive Programming/Olympiads CC-4 Redemption Arc/cmake-build-debug/CMakeFiles/allenssegments.dir
+D:/Documents/Competitive Programming/Olympiads CC-4 Redemption Arc/cmake-build-debug/CMakeFiles/walk.dir
+D:/Documents/Competitive Programming/Olympiads CC-4 Redemption Arc/cmake-build-debug/CMakeFiles/circleoflife.dir
+D:/Documents/Competitive Programming/Olympiads CC-4 Redemption Arc/cmake-build-debug/CMakeFiles/excellentstudents.dir
+D:/Documents/Competitive Programming/Olympiads CC-4 Redemption Arc/cmake-build-debug/CMakeFiles/edit_cache.dir
+D:/Documents/Competitive Programming/Olympiads CC-4 Redemption Arc/cmake-build-debug/CMakeFiles/rebuild_cache.dir

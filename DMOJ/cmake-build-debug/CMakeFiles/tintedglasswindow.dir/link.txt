@@ -1,0 +1,3 @@
+"C:\Program Files\JetBrains\CLion 2020.3\bin\cmake\win\bin\cmake.exe" -E rm -f CMakeFiles\tintedglasswindow.dir/objects.a
+C:\PROGRA~2\MINGW-~1\I686-8~1.0-P\mingw32\bin\ar.exe cr CMakeFiles\tintedglasswindow.dir/objects.a @CMakeFiles\tintedglasswindow.dir\objects1.rsp
+C:\PROGRA~2\MINGW-~1\I686-8~1.0-P\mingw32\bin\G__~1.EXE -g   -Wl,--whole-archive CMakeFiles\tintedglasswindow.dir/objects.a -Wl,--no-whole-archive  -o tintedglasswindow.exe -Wl,--out-implib,libtintedglasswindow.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\tintedglasswindow.dir\linklibs.rsp
