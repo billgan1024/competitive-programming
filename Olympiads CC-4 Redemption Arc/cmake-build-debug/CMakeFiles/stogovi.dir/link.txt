@@ -1,3 +1,0 @@
-"D:\CLion 2020.2.5\bin\cmake\win\bin\cmake.exe" -E rm -f CMakeFiles\stogovi.dir/objects.a
-D:\MinGW-64\mingw32\bin\ar.exe cr CMakeFiles\stogovi.dir/objects.a @CMakeFiles\stogovi.dir\objects1.rsp
-D:\MinGW-64\mingw32\bin\g++.exe -g   -Wl,--whole-archive CMakeFiles\stogovi.dir/objects.a -Wl,--no-whole-archive  -o stogovi.exe -Wl,--out-implib,libstogovi.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\stogovi.dir\linklibs.rsp

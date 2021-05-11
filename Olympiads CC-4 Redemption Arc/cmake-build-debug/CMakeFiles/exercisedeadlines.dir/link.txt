@@ -1,3 +1,0 @@
-"D:\CLion 2020.2.5\bin\cmake\win\bin\cmake.exe" -E rm -f CMakeFiles\exercisedeadlines.dir/objects.a
-D:\MinGW-64\mingw32\bin\ar.exe cr CMakeFiles\exercisedeadlines.dir/objects.a @CMakeFiles\exercisedeadlines.dir\objects1.rsp
-D:\MinGW-64\mingw32\bin\g++.exe -g   -Wl,--whole-archive CMakeFiles\exercisedeadlines.dir/objects.a -Wl,--no-whole-archive  -o exercisedeadlines.exe -Wl,--out-implib,libexercisedeadlines.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\exercisedeadlines.dir\linklibs.rsp

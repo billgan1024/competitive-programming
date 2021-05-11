@@ -1,3 +1,0 @@
-"D:\CLion 2020.2.5\bin\cmake\win\bin\cmake.exe" -E rm -f CMakeFiles\shopping.dir/objects.a
-D:\MinGW-64\mingw32\bin\ar.exe cr CMakeFiles\shopping.dir/objects.a @CMakeFiles\shopping.dir\objects1.rsp
-D:\MinGW-64\mingw32\bin\g++.exe -g   -Wl,--whole-archive CMakeFiles\shopping.dir/objects.a -Wl,--no-whole-archive  -o shopping.exe -Wl,--out-implib,libshopping.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\shopping.dir\linklibs.rsp

@@ -1,3 +1,0 @@
-"D:\CLion 2020.2.5\bin\cmake\win\bin\cmake.exe" -E rm -f CMakeFiles\excellentstudents.dir/objects.a
-D:\MinGW-64\mingw32\bin\ar.exe cr CMakeFiles\excellentstudents.dir/objects.a @CMakeFiles\excellentstudents.dir\objects1.rsp
-D:\MinGW-64\mingw32\bin\g++.exe -g   -Wl,--whole-archive CMakeFiles\excellentstudents.dir/objects.a -Wl,--no-whole-archive  -o excellentstudents.exe -Wl,--out-implib,libexcellentstudents.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\excellentstudents.dir\linklibs.rsp
