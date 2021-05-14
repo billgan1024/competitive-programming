@@ -25,9 +25,13 @@ typedef pair<int, int> pii;
 template<typename T, class cmp = less<T>> using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 template<typename T, typename X> using hash_map = gp_hash_table<T, X>;
 const int maxN = 1<<17;
-ll n, seg[2*maxN], s[2*maxN], pre[2*maxN], suf[2*maxN];
+
+ll n, q, seg[2*maxN], s[2*maxN], pre[2*maxN], suf[2*maxN];
+ll ans = LLONG_MIN, ansSuf = LLONG_MIN;
 void upd(int idx, int val) {
     //adjust the index, then update all segment trees
+    //note that u need to pick a segment so by default, all length-1 subarrays need to be chosen
+    //if it's the only one in the interval
     int p = idx+maxN; seg[p] += val; s[p] += val; pre[p] += val; suf[p] += val;
     for(int i = p/2; i > 0; i /= 2) {
         seg[i] = max(max(seg[2*i], seg[2*i+1]), suf[2*i]+pre[2*i+1]);
@@ -36,26 +40,44 @@ void upd(int idx, int val) {
         suf[i] = max(suf[2*i+1], s[2*i+1]+suf[2*i]);
     }
 }
-ll query(int l, int r, int a, int b, int p) {
-    //you can query the best subarray in any range by merging nodes
-    if(a >= l && b <= r) return seg[p];
-    else if(b < l || a > r) return LLONG_MIN;
+//segment tree dfs will always contruct the range from left to right, enabling you
+//to easily merge the answer by tracking the current best sum as well as the best suffix sum
+//(when merging, it's similar to how you would merge two segments normally)
+void query(int l, int r, int a, int b, int p) {
+    if(a >= l && b <= r) {
+        if(ans == LLONG_MIN) {                
+            //first segment 
+            ans = seg[p]; ansSuf = suf[p];
+        } else {
+            ans = max(max(ans, seg[p]), ansSuf+pre[p]);
+            ansSuf = max(suf[p], s[p] + ansSuf);
+        }
+    } 
+    else if(b < l || a > r) return;
     else {
-        int mid = (a+b)/2, ql = query(l, r, a, mid, 2*p), qr = query(l, r, mid+1, b, 2*p+1);
-        //merge these two ranges to ultimately find the max sum subarray in the original range
-        //by merging the values of ranges that fall inside the range
-        return max(max(ql, qr), ()+()
+        int mid = (a+b)/2;
+        query(l, r, a, mid, 2*p); query(l, r, mid+1, b, 2*p+1);
     }
 }
 int main() {
-    cin.sync_with_stdio(0); cin.tie(0); sc(n); 
+    cin.sync_with_stdio(0); cin.tie(0); sc(n, q); 
     //cout.setf(ios::unitbuf);
     //codeforces blog: use a segment tree for range queries & point updates
     //seg[i] = max subarray sum, pre[i] = max prefix sum, suf[i] = max suffix sum for a particular segment
     //seg[i] = max(seg[2*i], seg[2*i+1], suf[2*i]+pre[2*i+1])
     //pre[i] = max(pre[2*i], entire sum of segment 2*i + pre[2*i+1])
     //for simplicity, assume everything is 0-indexed 
-    for(int i = 0, x; i <= n; i++) {
+    for(int i = 0, x; i < n; i++) {
         sc(x); upd(i, x);  
+    }
+    for(int i = 0; i < q; i++) {
+        char cmd; int a, b; sc(cmd, a, b);
+        if(cmd == 'S') {
+            int dif = b-s[a+maxN-1]; upd(a-1, dif);
+        } else {
+            ans = LLONG_MIN; ansSuf = LLONG_MIN; 
+            query(a-1, b-1, 0, maxN-1, 1);
+            pr(ans, nl);
+        }
     }
 }
