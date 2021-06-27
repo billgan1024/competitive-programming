@@ -24,12 +24,12 @@ typedef long long ll;
 typedef pair<int, int> pii;
 template<typename T, class cmp = less<T>> using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 template<typename T, typename X> using hash_map = gp_hash_table<T, X>;
-
 int main() {
      cin.sync_with_stdio(0); cin.tie(0);
      //cout.setf(ios::unitbuf);
-     int n = 1000;
-     pr(n, nl);
-     for(int i = 1; i <= n; i++) pr(rand()%81, sp); pr(nl); 
-     for(int i = 1; i <= n; i++) pr(rand()%81, sp);
+    multiset<int> s; int a[12] = {1, 2, 3, 3, 4, 6, 6, 6, 6, 7, 9, 10};
+    for(int x : a) s.insert(x);
+    for(auto it = s.lower_bound(5); it != s.end() && *it <= 8; it++) {
+        pr(*it, sp); 
+    }
 }

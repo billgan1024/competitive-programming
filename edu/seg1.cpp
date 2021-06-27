@@ -33,12 +33,18 @@ void upd(int i, int v)
     seg[i+N] = v;
     for(int p = i+N >> 1; p; p >>= 1) seg[p] = seg[2*p] + seg[2*p+1];
 }
-ll sum(int l, int r, int a, int b, int p)
+ll sum(int l, int r)
 {
-    if(a >= l && b <= r) return seg[p];
-    else if(a > r || b < l) return 0;
-    int mid = (a+b)/2;
-    return sum(l, r, a, mid, 2*p) + sum(l, r, mid+1, b, 2*p+1);
+    int x = l+N, y = r+N; ll ret = 0;
+    for(; x <= y; x /= 2, y /= 2) {
+        if(x % 2 == 1) {
+            ret += seg[x++];
+        }
+        if(y % 2 == 0) {
+            ret += seg[y--];
+        }
+    }
+    return ret;
 }
 int main()
 {
@@ -49,6 +55,6 @@ int main()
     {
         sc(cmd, a, b);
         if(cmd == 1) upd(a, b);
-        else pr(sum(a, b-1, 0, N-1, 1), nl);
+        else pr(sum(a, b-1), nl);
     }
 }

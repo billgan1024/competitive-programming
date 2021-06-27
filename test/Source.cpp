@@ -1,7 +1,6 @@
-#include <bits/stdc++.h>
+﻿#include <bits/stdc++.h>
 using namespace std;
 
-#pragma GCC optimize("Ofast")
 #define INF 0x3f
 #define nl '\n'
 #define pb push_back
@@ -19,42 +18,68 @@ void pr() {} template<class T, class...A> void pr(T t, A...a) { cout << t, pr(a.
 
 typedef long long ll;
 typedef pair<int, int> pii;
-const int maxN = 1<<4;
+const int maxN = 1e5+1;
+//since you can pick the root of the tree, this problem basically asks u to find the tree with maximum diameter or minimum radius
+//which is a superset of the input graph (that is a forest), since for every tree, the diameter is the
+//longest path (i.e. largest possible height) and the radius is the smallest possible height (and u find the optimal tree)
+//observe that the end graph is actually just a tree of the subtrees, meaning that any longest path should be on a graph
+//which simply connects all of the subtrees in a line (because the longest path will only be able to traverse the 'bridge' edges once)
+//from there, connect all graphs via the diameter since the longest path is simply the sum of individual paths in each subtree, so maximize individually
 
-int n, q, seg[2*maxN];
+//minimum radius: merge all graphs together as to maintain the minimum possile radius of the combined graph every time 
+//it can be shown that the minimum radius is equal to the minimum radius of the subtrees + frequency of that number - 1 since
+//you can always merge a tree with a smaller radius into a tree with a larger radius.
 
-void upd(int p, int val) {
-    seg[p] = val;
-    for(int i = p/2; i > 0; i /= 2) seg[p] = min(seg[2*p], seg[2*p+1]);
+int N, M, Q, ans, cnt, dis[maxN], len, far; vector<pii> adj[maxN], dat; bool vis[maxN], vis2[maxN];
+//dfs and keep track of the node with the maximum distance
+void dfs(int cur, int d) {
+    if(vis[cur]) return;
+    vis[cur] = true; if(len < d) { far = cur; len = d; }
+    for(pii nxt : adj[cur]) dfs(nxt.first, d+nxt.second);
 }
-
-int query(int l, int r, int a, int b, int p) {
-    if(a >= l && b <= r) return seg[p];
-    else if(b < l || a > r) return INT_MAX;
-    int mid = (a+b)/2;
-    return min(query(l, r, a, mid, 2*p), query(l, r, mid+1, b, 2*p+1)); 
+void dfs2(int cur, int d) {
+    if(vis2[cur]) return;
+    //dfs enter function
+    vis2[cur] = true; dis[cur] = d;
+    if(len < d) { far = cur; len = d; }
+    for(pii nxt : adj[cur]) dfs2(nxt.first, d+nxt.second);
+    //dfs return function
+}
+void solve(int cur) {
+    //computes the radius and diameter for node i's connected component (we can do dfs to determine distances since it's a tree)
+    len = INT_MIN;
+    dfs(cur, 0); int p1 = far; len = INT_MIN;
+    //note: we need 2 vis arrays because we're doing dfs on the same connected component twice
+    dfs2(p1, 0); int p2 = far, diameter = len, dr1 = diameter, dr2 = 0, radius = INT_MAX;
+    //we can use this trick to recall the actual shortest path to a node in O(v+e) time
+    int i = p2;
+    while(i != p1) {
+        radius = min(radius, max(dr1, dr2));
+        //transition to the next one
+        for(pii nxt : adj[i]) {
+            if(dis[nxt.first] == dis[i]-nxt.second) { i = nxt.first; dr1 -= nxt.second; dr2 += nxt.second; break; }
+        }
+    }
+    dat.pb({diameter, radius == INT_MAX ? 0 : radius});
 }
 int main() {
-    cin.sync_with_stdio(0); cin.tie(0); sc(n, q); ms(seg, INF);
-    //cout.setf(ios::unitbuf);
-    //use binary search on a min segment tree to find the least index >= b with a[i] <= y
-    //do this by binary searching for the last index such that the prefix min > y
-    while(q--) {
-        char cmd; int a, b, x, y; sc(cmd);
-        if(cmd == 'M') {
-            sc(x, a); upd(a+maxN-1, x);
-        } else {
-            sc(y, b);
-            if(seg[b+maxN-1] <= y) pr(b, nl);
-            else {
-                int lo = b, hi = n, ans = 0; 
-                while(lo <= hi) {
-                    int mid = (lo+hi)/2;
-                    if(query(b-1, mid-1, 0, maxN-1, 1) > y) { ans = mid; lo = mid+1; }
-                    else hi = mid-1; 
-                }
-                pr(ans == n ? -1 : ans+1, nl);
-            }
+    cin.sync_with_stdio(0); cin.tie(0); sc(N, M, Q);
+    for(int i = 0, u, v, l; i < M; i++) {
+        sc(u, v, l); adj[u].pb({v, l}); adj[v].pb({u, l});
+    }
+    //for each component, compute the radius and diameter (data stores {diameter, radius})
+    for(int i = 1; i <= N; i++) {
+        if(!vis[i]) solve(i);
+    }
+    if(Q == 1) {
+        for(pii p : dat) ans += p.first;
+        pr(ans+sz(dat)-1);
+    } else {
+        ans = INT_MIN; 
+        for(pii p : dat) {
+            if(ans < p.second) { ans = p.second; cnt = 1; }
+            else if(ans == p.second) cnt++;
         }
+        pr(ans+cnt-1);
     }
 }

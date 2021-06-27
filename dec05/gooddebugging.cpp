@@ -68,7 +68,7 @@ int query(int l, int r, int a, int b, int p) {
 }
 int main() {
     cin.sync_with_stdio(0); cin.tie(0); sc(n, m, l);
-    //cout.setf(ios::unitbuf);
+    cout.setf(ios::unitbuf);
     for(int i = 0; i < n; i++) upd(i, i, 0, maxN-1, 1);
     while(m--) {
         int a, b; sc(a, b);
