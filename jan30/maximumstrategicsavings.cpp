@@ -79,5 +79,6 @@ int main() {
             ans += cnt[!i]*c; cnt[i]--;
         }
     }
+
     pr(tot-ans);
 }

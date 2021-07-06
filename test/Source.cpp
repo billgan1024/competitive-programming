@@ -9,7 +9,7 @@ using namespace std;
 #define clz __builtin_clz
 #define clzll __builtin_clzll
 #define popcnt __builtin_popcount
-#define flush cout << flush
+#define flush cout.setf(ios::unitbuf)
 #define sz(x) (int)x.size()
 #define scln(x) getline(cin, x)
 
@@ -18,68 +18,55 @@ void pr() {} template<class T, class...A> void pr(T t, A...a) { cout << t, pr(a.
 
 typedef long long ll;
 typedef pair<int, int> pii;
-const int maxN = 1e5+1;
-//since you can pick the root of the tree, this problem basically asks u to find the tree with maximum diameter or minimum radius
-//which is a superset of the input graph (that is a forest), since for every tree, the diameter is the
-//longest path (i.e. largest possible height) and the radius is the smallest possible height (and u find the optimal tree)
-//observe that the end graph is actually just a tree of the subtrees, meaning that any longest path should be on a graph
-//which simply connects all of the subtrees in a line (because the longest path will only be able to traverse the 'bridge' edges once)
-//from there, connect all graphs via the diameter since the longest path is simply the sum of individual paths in each subtree, so maximize individually
 
-//minimum radius: merge all graphs together as to maintain the minimum possile radius of the combined graph every time 
-//it can be shown that the minimum radius is equal to the minimum radius of the subtrees + frequency of that number - 1 since
-//you can always merge a tree with a smaller radius into a tree with a larger radius.
+const int maxN = 1<<18;
 
-int N, M, Q, ans, cnt, dis[maxN], len, far; vector<pii> adj[maxN], dat; bool vis[maxN], vis2[maxN];
-//dfs and keep track of the node with the maximum distance
-void dfs(int cur, int d) {
-    if(vis[cur]) return;
-    vis[cur] = true; if(len < d) { far = cur; len = d; }
-    for(pii nxt : adj[cur]) dfs(nxt.first, d+nxt.second);
+struct event { int x, amnt, id, pos; } pts[maxN];
+bool c(event a, event b) { return a.x < b.x; } 
+
+int T, N, ans, s[2 * maxN], d[maxN], intervals[maxN][2]; set<int> distinct;
+void push(int p) {
+    s[2*p] += d[p]; d[2*p] += d[p]; s[2*p+1] += d[p]; d[2*p+1] += d[p]; d[p] = 0;
 }
-void dfs2(int cur, int d) {
-    if(vis2[cur]) return;
-    //dfs enter function
-    vis2[cur] = true; dis[cur] = d;
-    if(len < d) { far = cur; len = d; }
-    for(pii nxt : adj[cur]) dfs2(nxt.first, d+nxt.second);
-    //dfs return function
-}
-void solve(int cur) {
-    //computes the radius and diameter for node i's connected component (we can do dfs to determine distances since it's a tree)
-    len = INT_MIN;
-    dfs(cur, 0); int p1 = far; len = INT_MIN;
-    //note: we need 2 vis arrays because we're doing dfs on the same connected component twice
-    dfs2(p1, 0); int p2 = far, diameter = len, dr1 = diameter, dr2 = 0, radius = INT_MAX;
-    //we can use this trick to recall the actual shortest path to a node in O(v+e) time
-    int i = p2;
-    while(i != p1) {
-        radius = min(radius, max(dr1, dr2));
-        //transition to the next one
-        for(pii nxt : adj[i]) {
-            if(dis[nxt.first] == dis[i]-nxt.second) { i = nxt.first; dr1 -= nxt.second; dr2 += nxt.second; break; }
-        }
+void upd(int l, int r, int a, int b, int p, int v) {
+    //enter recursion with the assumption that the node p is up-to-date
+    //parent nodes: [1, maxN-1], leaf nodes: [maxN, 2*maxN-1]
+    if(l <= a && b <= r) { s[p] += v; if(p < maxN) d[p] += v; } 
+    else if(b < l || r < a) return; //in both cases, exit the node with an up-to-date status
+    else {
+        //make sure the children are up-to-date when searching into them
+        push(p); int mid = (a+b)/2;
+        upd(l, r, a, mid, 2*p, v); upd(l, r, mid+1, b, 2*p+1, v);
+        //at the end, automatically recalculate the new maximum to maintain up-to-dateness in the path from
+        //this node to the root since those nodes will be outdated
+        //the children nodes will be up-to-date so use the values.
+        s[p] = max(s[2*p], s[2*p+1]);
     }
-    dat.pb({diameter, radius == INT_MAX ? 0 : radius});
 }
+
+//maintain up-to-dateness in the current node 
+//you're not changing the values of any particular node, so you're just propagating lazy updates downward when necessary
+int query(int l, int r, int a, int b, int p) {
+    if(l <= a && b <= r) return s[p];
+    else if(b < l || r < a) return INT_MIN;
+    else {
+        push(p); int mid = (a+b)/2;
+        return max(query(l, r, a, mid, 2*p), query(l, r, mid+1, b, 2*p+1));
+    }
+}
+
 int main() {
-    cin.sync_with_stdio(0); cin.tie(0); sc(N, M, Q);
-    for(int i = 0, u, v, l; i < M; i++) {
-        sc(u, v, l); adj[u].pb({v, l}); adj[v].pb({u, l});
-    }
-    //for each component, compute the radius and diameter (data stores {diameter, radius})
-    for(int i = 1; i <= N; i++) {
-        if(!vis[i]) solve(i);
-    }
-    if(Q == 1) {
-        for(pii p : dat) ans += p.first;
-        pr(ans+sz(dat)-1);
-    } else {
-        ans = INT_MIN; 
-        for(pii p : dat) {
-            if(ans < p.second) { ans = p.second; cnt = 1; }
-            else if(ans == p.second) cnt++;
-        }
-        pr(ans+cnt-1);
+    sc(T);
+   for(int t = 1; t <= T; t++) {
+		sc(N); ms(s, 0); ms(d, 0); ms(pts, 0); ans = 0;
+		//the easiest way to capture all important regions tracking # of overlapping segments (even at the edges)
+		//is to pretend all points AND lines are array cells
+		//then, you have an array of size 2N (segment tree of size 4N) to perform queries + updates on
+		//maintain a map of lists to find the important points in the difference array to examine 
+		for(int i = 0, a, b; i < N; i++) {
+			sc(a, b); intervals[i][0] = 2*a; intervals[i][1] = 2*b+1; distinct.insert(2*a); distinct.insert(2*b+1); 
+			pts[2*i] = {2*a, 1, i}; pts[2*i+1] = {2*b+1, -1, i}; //1 = entering, -1 = exiting
+		} 
+		sort(pts, pts+2*N, c);
     }
 }

@@ -27,9 +27,8 @@ template<typename T, typename X> using hash_map = gp_hash_table<T, X>;
 int main() {
      cin.sync_with_stdio(0); cin.tie(0);
      //cout.setf(ios::unitbuf);
-    multiset<int> s; int a[12] = {1, 2, 3, 3, 4, 6, 6, 6, 6, 7, 9, 10};
-    for(int x : a) s.insert(x);
-    for(auto it = s.lower_bound(5); it != s.end() && *it <= 8; it++) {
-        pr(*it, sp); 
-    }
+
+    map<int, int> c;
+    c[2] = 3; c[4] = 4;
+    for(auto p : c) pr(p.first, sp, p.second, nl);
 }
