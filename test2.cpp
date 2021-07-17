@@ -27,4 +27,8 @@ template<typename T, typename X> using hash_map = gp_hash_table<T, X>;
 
 int main() {
     cin.sync_with_stdio(0); cin.tie(0);
+    int a[5] = {1, 2, 3, 4, 5};
+    //if there is no section of the array that has the index with a[i] >= v, then return the right endpoint, which is outside 
+    //of the half-open interval [l, r)
+    pr(lower_bound(a+1, a+1, 2)-a);
 }

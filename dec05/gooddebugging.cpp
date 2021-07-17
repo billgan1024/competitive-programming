@@ -75,6 +75,10 @@ int main() {
         upd(a-1, b-1, 0, maxN-1, 1);
         //binary search for the smallest index in [0, n) that has the prefix sum
         //equal to L, or return n if no such index is found
+        //alternatively, simply traverse the tree from top to bottom and look for the earliest segment with sum > 0,
+        //which will find the index of the first 1.
+        //we're using the sum (and not maximum) because xor distributes with sum easily but not with maximum.
+        //note that this technique is similar to finding the index of the maximum element in a max seg tree with no additional processing
         int lo = 0, hi = n-1, ans = n;
         while(lo <= hi) {
             int mid = (lo+hi)/2;

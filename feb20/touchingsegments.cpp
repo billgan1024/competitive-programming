@@ -35,17 +35,17 @@ const int maxN = 1<<18;
 struct event { int x, amnt, id, pos; } pts[maxN];
 bool c(event a, event b) { return a.x < b.x; } 
 
-int T, N, ans, s[2*maxN], d[maxN], cmp[maxN][2];
-//d[i] = pending range increment on the children of node i
+int T, N, ans, s[2*maxN], d[2*maxN], cmp[maxN][2];
+//d[i] = pending range increment on the children of node i (if i is already a leaf node, this has no effect)
 void push(int p) {
     s[2*p] += d[p]; s[2*p+1] += d[p];
-    if(2*p < maxN) { d[2*p] += d[p];  d[2*p+1] += d[p]; } 
+    d[2*p] += d[p];  d[2*p+1] += d[p];
     d[p] = 0;
 }
 void upd(int l, int r, int a, int b, int p, int v) {
     //enter recursion with the assumption that the node p is up-to-date
     //parent nodes: [1, maxN-1], leaf nodes: [maxN, 2*maxN-1]
-    if(l <= a && b <= r) { s[p] += v; if(p < maxN) d[p] += v; } 
+    if(l <= a && b <= r) { s[p] += v; d[p] += v; } 
     else if(b < l || r < a) return; //in both cases, exit the node with an up-to-date status
     else {
         //make sure the children are up-to-date when searching into them
