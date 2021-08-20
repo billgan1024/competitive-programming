@@ -29,10 +29,7 @@ typedef pair<int, int> pii;
 
 const int maxN = 1<<18;
 
-struct event { int x, amnt, id, pos; } pts[maxN];
-bool c(event a, event b) { return a.x < b.x; } 
-
-int T, N, ans, s[2*maxN], d[2*maxN], cmp[maxN][2], a[maxN];
+int T, N, ans, s[2*maxN], d[2*maxN], a[maxN];
 //d[i] = pending range increment on the children of node i (if i is already a leaf node, this has no effect)
 void push(int p) {
     s[2*p] = d[p]; s[2*p+1] = d[p];
