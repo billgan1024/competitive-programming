@@ -26,40 +26,55 @@ template<typename T, class cmp = less<T>> using ordered_set = tree<T, null_type,
 template<typename T, typename X> using hash_map = gp_hash_table<T, X>;
 const int maxN = 1<<20;
 
-int n, q, seg[2*maxN];
-
-void upd(int p, int val) {
-    seg[p] = val;
+int N, Q, seg[2*maxN], targetNode, threshold; bool found = false;
+void upd(int p, int v) {
+    seg[p] = v;
     for(int i = p/2; i > 0; i /= 2) seg[i] = min(seg[2*i], seg[2*i+1]);
 }
-
-int query(int l, int r, int a, int b, int p) {
-    if(a >= l && b <= r) return seg[p];
-    else if(b < l || a > r) return INT_MAX;
-    int mid = (a+b)/2;
-    return min(query(l, r, a, mid, 2*p), query(l, r, mid+1, b, 2*p+1)); 
+//modify this query to find the first node in the seg tree with min < k
+//use the fact that dfsing on the left side before the right side will always yield the sequence
+//of segments in the range from left to right, maintain a global search that processes each segment from left to right
+//to determine the node to search further
+void query(int l, int r, int a, int b, int p) {
+    if(found) return;
+    if(a >= l && b <= r) {
+        if(seg[p] < threshold) { targetNode = p; found = true; return; }
+    }
+    else if(b < l || a > r) return;
+    else {
+        int mid = (a+b)/2;
+        query(l, r, a, mid, 2*p);
+        query(l, r, mid+1, b, 2*p+1);
+    }
 }
 int main() {
-    cin.sync_with_stdio(0); cin.tie(0); sc(n, q); ms(seg, INF);
+    cin.sync_with_stdio(0); cin.tie(0); sc(N, Q); ms(seg, INF);
     //cout.setf(ios::unitbuf);
-    //use binary search on a min segment tree to find the least index >= b with a[i] <= y
-    //do this by binary searching for the last index such that the prefix min > y
-    while(q--) {
-        char cmd; int a, b, x, y; sc(cmd);
-        if(cmd == 'M') {
-            sc(x, a); upd(a+maxN-1, x);
+    //use binary search on a min segment tree to find the least index in [l, r] with a[i] < k
+    //segment tree stores leaves in a 1-indexed way
+    for(int i = 1, x; i <= N; i++) { sc(x); upd(i+maxN-1, x); }
+    int lastAns = 0;
+    while(Q--) {
+        int c, p, x, l, r; sc(c);
+        if(c == 1) {
+            sc(p, x); p ^= lastAns; x ^= lastAns; upd(p+maxN-1, x);
         } else {
-            sc(y, b);
-            if(seg[b+maxN-1] <= y) pr(b, nl);
-            else {
-                int lo = b, hi = n, ans = 0; 
-                while(lo <= hi) {
-                    int mid = (lo+hi)/2;
-                    if(query(b-1, mid-1, 0, maxN-1, 1) > y) { ans = mid; lo = mid+1; }
-                    else hi = mid-1; 
-                }
-                pr(ans == n ? -1 : ans+1, nl);
+            sc(l, r, threshold); l ^= lastAns; r ^= lastAns; threshold ^= lastAns;
+            found = false;
+
+            //to find the first index in [l, r] with a[i] < k, it suffices to query the min seg tree for all of
+            //the segments that make up the query range
+            //then, because you are now dealing with an entire segment, you can use the trick in which you find
+            //the first element < k in a range corresponding to exactly one segment in log(n) time
+            query(l, r, 1, maxN, 1);
+            //search from the targetNode segment until you find the leaf node which is the first index with a[i] < k
+            //(edge case: targetNode is already a leaf node)
+            //total complexity: 2 log(n) searches per query so O(nlogn)
+            while(targetNode < maxN) {
+                if(seg[targetNode*2] < threshold) targetNode *= 2;
+                else if(seg[targetNode*2+1] < threshold) targetNode = targetNode*2+1;
             }
+            pr(targetNode-maxN+1, nl); lastAns = targetNode-maxN+1;
         }
     }
 }
