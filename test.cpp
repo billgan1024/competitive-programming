@@ -1,6 +1,5 @@
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
-#include <format>
 
 using namespace __gnu_pbds;
 using namespace std;
@@ -27,12 +26,12 @@ typedef pair<int, int> pii;
 template<typename T> using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 template<typename T, typename X> using hash_map = gp_hash_table<T, X>;
 
-int N = 1000, M = 1000;
+int N = 1e9;
 ordered_set<int> s;
 int main() {
     // freopen("bruhtest.txt", "w", stdout);
     cin.sync_with_stdio(0); cin.tie(0);
     // pr(__cplusplus);
-    s.insert(6);
-    cout << format("{}", 3);
+    pr((ll)N+N*N);
+
 }

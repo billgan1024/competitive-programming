@@ -19,8 +19,6 @@ void pr() {} template<class T, class...A> void pr(T t, A...a) { cout << t, pr(a.
 typedef long long ll;
 typedef pair<int, int> pii;
 
-
 int main() {
     cin.sync_with_stdio(0); cin.tie(0);
-    pr(mod(-3+2, 2));
 }

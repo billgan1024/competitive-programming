@@ -1,0 +1,241 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[parfill]{parskip}
+\usepackage{hyperref}
+\usepackage{amsmath,amscd,amssymb,amsfonts,amsthm}
+\hypersetup{colorlinks=true, urlcolor=blue}
+\usepackage[margin=0.8in]{geometry}
+\usepackage{enumitem}
+\usepackage{mathtools}
+\usepackage{dcolumn}
+\newcolumntype{2}{D{.}{}{2.0}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\di}{\;|\;}
+\newcommand{\ord}{\textrm{ord}}
+\newcommand{\lcm}{\mathrm{lcm}}
+\newcommand{\floor}[1]{\lfloor #1 \rfloor}
+\newcommand{\thm}[1]{\textbf{Theorem #1}}
+\newcommand{\define}[1]{\textbf{Definition #1}}
+\newcommand{\obs}[1]{\textbf{Observation #1}}
+\newcommand{\cor}[1]{\textbf{Corollary #1}}
+\newcommand{\modulo}{\;\%\;}
+\newcommand{\lem}[1]{\textbf{Lemma #1}}
+\newcommand{\conj}[1]{\textbf{Conjecture #1}}
+\newcommand{\limit}[1]{\lim\limits_{#1}}
+\newcommand{\q}[1]{\textbf{Question #1}}
+\newcommand{\code}[1]{\texttt{#1}}
+
+\begin{document}
+\section{General tips}
+To avoid TLE even with correct complexity, use arrays of structs instead of vectors/sets/maps of tuples.
+
+\subsection{Naming Conventions}
+\begin{itemize}
+    \item maxN - max value of a particular variable
+
+    \item local variables in functions and other global variables
+          need to be lowercase words, uppercase letters if just one character,
+          or camelcased if there's multiple words (including input variables like N, M)
+
+    \item arrays can be a single lowercase character or follow the same naming convention as local variables
+
+    \item functions are snake cased
+\end{itemize}
+
+\section{Data Structures}
+
+\subsection{Unordered map}
+This is comparable to an array with unlimited indices, and operations take amortized $O(1)$ time
+
+It is implemented as a hash table in which indices are mapped to a fixed size array, and they are
+associated with values.
+
+\subsection{Map}
+Implemented as a self-balancing tree where keys are ordered by some total order, and then
+they are associated with values. Thus, operations take $O(\log n)$ time.
+
+\subsection{Unordered set}
+It has the same implementation as unordered map but without the values (only keys are stored).
+
+\subsection{Set}
+It has the same implementation as map but without the values (only keys are stored).
+
+\subsection{Vector}
+Implemented as a dynamically-resizing array in ram. Basically, the CPU allocates a certain
+amount of extra space so that the vector always takes up a contiguous block of memory.
+Any overflows result in the whole vector being copied to a new location, and so operations
+like \code{push\_back} take amortized $O(1)$ time.
+
+\section{Algorithms}
+
+\subsection{Divide and conquer}
+Use this if you find a way to solve ad-hoc problems by seeing that
+the recursive breakdown of the problem combined with the computation
+of subproblems (usually involving optimization with a data structure)
+is faster than the naive way.
+
+Usually involves processing the input a certain way as to allow you to
+use a data structure like a frequency array, set, or map.
+
+\subsection{Graphs}
+Length of a path: sum of the number of edges.
+
+Shortest distance between two nodes: length of shortest path
+between them. (for a tree, there's exactly one path between any two nodes)
+
+Depth of a node in a tree: its distance from the root.
+
+\subsection{BFS/DFS}
+A flood fill
+BFS/DFS (where you perform BFS/DFS on each component) takes $O(V+E)$ time because in total, you are looping through each edge twice,
+and you are accessing each node once. The same thing applies with one
+BFS/DFS.
+
+\subsection{Center + diameter}
+Any tree always has a diameter pair (pair of vertices with
+the longest path) and a center.
+
+When a tree is roooted arbitrarily, all nodes
+that are furthest from the root are
+endpoints of a longest path, which allows you to
+find a diameter pair by doing two DFSes to find a furthest node,
+then finding the node furthest from this endpoint, which will be a
+diameter pair.
+
+Center: node with the minimum height (max depth) of the tree when
+it's rooted.
+
+Radius: minimum height of the tree.
+
+Given a diameter pair, the center is the middle node.
+Proof: suppose that another node was the center, but it was not the middle node
+on this diameter. Then consider the
+tree laid out so that
+the diameter is a line and
+every node (except the endpoints)
+can have a subtree connected to it.
+Any other node on the diameter is clearly
+not a center because there exists a path longer than the current radius.
+The same thing happens with nodes which are not on the diameter:
+they must connect to a node on the diameter, which has a path
+that has length $\geq$ the radius, and you are adding a positive
+value to this length.
+
+If you find a diameter pair $(x, y)$, then every node's maximum distance
+is equal to the maximum of the distance from that node to $x$ and
+the distance from that node to $y$.
+
+Proof: let the arbitrary vertices be $u, v$. consider the tree with the diameter
+as a line. You will find that either
+$d(u, v) \leq d(u, x)$ or $d(u, v) \leq d(u, y)$ due to the fact that
+if the path from $u$ to $v$ passes through the diameter,
+any path from $u$ to a node $b$
+on the diameter is less than or equal to $d(b, x)$ and $d(b, y)$.
+
+
+The minimum number of edges you need to traverse to visit all nodes
+in a tree is \code{2*E - diameter}.
+This is because any efficient tour is made up of a path
+between two nodes in which you visit all nodes in the subtrees for
+the nodes in this special path. It follows that the set of lengths
+of all efficient tours is equal to the set of all $2*E-l$ where
+$l$ is the distance between two nodes,
+and so the minimum total number of edges is \code{2*E-diameter}.
+
+\subsection{Centroid decomposition}
+Allows you to 'sort' the graph by finding an optimal node to start your algorithm from
+If the problem can be broken down into an $O(n)$ computation on the current graph combined
+with the same problem applied to the subtrees, then you can use the centroid to ensure that
+you only do $O(\log n)$ DFSes on the original graph.
+
+Computing a centroid takes $O(\text{size of component})$ time since
+you find the size of the subtree with an arbitrary root, then DFS to find the centroid.
+At each iteration, you don't care about the previous parts of the graph when you find the
+subtree with $> s/2$ nodes,
+since the total number of nodes in the previous parts of the graph will be less than $s/2$.
+
+Every graph algorithm is done with respect to a blocked array. We never search into a blocked node,
+and we set the current centroid node to blocked before searching into the subtrees.
+This way, the recursion will terminate once you encounter subtrees with only the centroid in the subtree.
+
+Key ideas:
+
+\begin{itemize}
+    \item
+          You can maintain a data structure or precompute values
+          on the centroids so that the centroid tree only has $O(\log(n))$ height.
+
+    \item Break down path queries to turn them into problems related to subtrees. There are always $O(n^2)$ distinct paths
+          in a tree which is equivalent to the pairs of nodes.
+
+    \item This strategy also goes hand-in-hand with DP problems that can be broken down into identical problems about the
+          subtrees. The key idea is that normal tree DP without centroid decomposition can only solve recurrences that
+          take $O(\text{number of children of the root})$ time to compute for each call to solve
+          a subproblem, where centroids can solve recurrences that take
+          $O(\text{size of current graph})$ to compute for each subproblem.
+\end{itemize}
+
+\subsection{Tree DP techniques}
+\begin{itemize}
+    \item Try to break a problem into equivalent problems on the subtrees of a node, given an arbitrary root.
+    \item Up-down tree DP technique: use this if your dp array needs to represent data about the entire graph for every node.
+          For example, consider the case where you need to calculate the height of the tree when it's rooted at any node.
+          This problem can be broken into standard tree dp in which you calculate the height of each node's subtree with a fixed root,
+          but you also need to calculate the max distance to a node outside of the subtree \code{up[i]}, which requires a separate dp array
+          that is accumulated from the parent of a node (\code{up[i] = max(2+max distance from the parent to a node in
+          the parent's subtree which is not
+          in the original node's subtree, 1+up[parent])})
+\end{itemize}
+
+\subsection{Tree DS techniques}
+Suppose you have a value associated with each node. Here's how to solve various problems.
+
+\begin{itemize}
+
+    \item Subtree query, point update: use a tree traversal array to map each node to an index in the array such that
+          all subtrees are represented by contiguous subsequences. Then use a BIT to perform point updates and range queries.
+
+    \item Subtree update, point query: same idea as above but use a BIT difference array for range updates and point queries
+    
+    \item Point update, path query: precompute the combination of values from the root to any particular node, then use 
+    the \code{ans[a]+ans[b]-2*ans[lca(a, b)]} trick.
+
+    \item Path (to the root) update, point query: notice how when a node is updated, this also implies that all of its 
+    parent nodes should be updated. When the initial value of each node is zero, this means that \textbf{you can simply 
+    assign the true value of each node to the sum of its subtree}. This translates to point updates and subtree queries.
+
+\end{itemize}
+
+
+\subsection{Powers of 2 data structure}
+If you need to perform an associative operation
+$n$ times and obtain the result, or need to perform an iterated function
+$n$ times, you can maintain an $O(n\log n)$ data structure
+that captures the 'function' composed with itself
+$2^k$ times. Then, you can query $f^{(n)}(x)$ in $\log n$ time, or even $O(1)$ time
+if you're dealing with a sparse table.
+
+Examples: Modular exponentiation, matrix exponentiation ($X^n$, or $\prod_{i=l}^r X_i$), lowest common ancestor,
+successor graph.
+
+\subsection{Minimum spanning tree}
+
+\subsection{Lambdas + Call by reference}
+
+In C++, everything except arrays are called by value. Remember not to pass vectors; only pass structs and
+variables (only things of $O(1)$ size).
+
+We can declare anonymous functions, and then functions can take a lambda as an argument. (Lambdas take $O(1)$ size as well,
+as they are objects that contain a function that's not executed; it simply takes up a fixed size).
+
+https://medium.com/@winwardo/c-lambdas-arent-magic-part-2-ce0b48934809
+
+
+Use the capture list to get access to a copy of a particular variable (it is passed by value.)
+
+
+\end{document}
