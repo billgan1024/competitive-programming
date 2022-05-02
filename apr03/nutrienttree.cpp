@@ -45,9 +45,9 @@ int f(int cur, int i) {
     else if(dp[cur][i]) return dp[cur][i];
     else {
         if(sz(adj[cur]) == 1) {
-            // //root is an edge, so simulate giving j boosts to the node below it
-            // // last optimization: we can binary search for the optimal number of boosts to assign to the child
-            // // since dp[nxt][j] is monotone but it's being restricted by (1+(i-j))^2
+            //root is an edge, so simulate giving j boosts to the node below it
+            // last optimization: we can binary search for the optimal number of boosts to assign to the child
+            // since dp[nxt][j] is monotone but it's being restricted by (1+(i-j))^2
             int nxt = adj[cur][0];
             int lo = 0, hi = i, idx = 0;
             // optimal j is going to be: largest j in [0, i] such that dp[nxt][j] <= (1+i-j)^2, or that index + 1
@@ -73,6 +73,7 @@ int f(int cur, int i) {
             int nxt1 = adj[cur][0], nxt2 = adj[cur][1];
             for(int j = 0; j <= i; j++) {
                 // assign j boosts to one group and i-j to the other
+                // the fact that this is a binary tree means that this transition takes O(X) time
                 dp[cur][i] = max(dp[cur][i], f(nxt1, j) + f(nxt2, i-j));
             }
         }

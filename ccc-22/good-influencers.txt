@@ -1,0 +1,74 @@
+
+find the minimum cost of a sequence (v1, v2, ..., vn) of node activations that marks every node, where 
+a valid sequence is just a sequence of nodes such that we only activate already marked nodes
+(where nodes activate their neighbours)
+intuition: split this problem into a subtree and calculate dp[i][0/1] = min cost to activate the entire tree,
+given the original state (0) or marked (1)
+goal: compute dp[i][m[i]], such that computing all of dp[i][0/1] would give us the result.
+let's say node i is marked and we're trying to get an optimal sequence of moves.
+if we activate the node, the optimal cost is just equal to c[i] + sum of dp[child][1]
+otherwise, any optimal solution would just fill up each individual subtree, so the answer without activating
+node i is sum of dp[child][m[child]]
+let's say node i isn't marked (so we're computing dp[i][0]), and consider any optimal sequence of moves for i's subtree.
+examine the step in an optimal sequence when node i is marked
+this must have occurred from the activation of a path from a marked node in one of the subtrees to node i.
+then examine this subtree. 
+
+claim: either the sequence (optimal sequence to mark this subtree) + (activate node i with the child node) + 
+(optimal sequences to activate each individual subtree), or 
+(optimal sequence to mark this subtree) + (activate i with the child node + activate node i)
++ (activate individual subtrees) is an optimal sequence (with min cost).
+
+Proof: 
+
+if we prove this, then it follows that the answer can be obtained by brute forcing the child subtree, because we have 
+effectively proved that there exists a child tree such that 
+the answer is equal to the minimum of () ? 
+(notice how programs are isomorphic to mathematical proofs)
+
+also, trees are very nice recursively since the adt is just a node with n >= 0 trees as children
+
+
+then mark i, and then we can decide whether to activate i or not. in this case, 
+we would add dp[child that activated i][m[child that activated i]] + c[child that activated i] to the total cost. 
+if u decide to activate i, 
+then we need to add c[i] + sum of dp[child][1] - dp[child that activated i][1] 
+otherwise, we need to compute sum of dp[child][m[child]] - dp[child that activated i][m[child that activated i]]
+if we assume that node i is not marked (0) or marked (1)
+all of this can be accomplished with a depth-first search and a data structure processing range sums of f(children)
+after each O(e) call to dfs 
+as a side note, counting steps amounts to counting # of times we iterate and call a function (since that allocates a stack frame)
+
+edit: if you can't prove it, it's probably not correct
+
+new approach:
+
+naive: try recursion for dp[i] = min cost for i's subtree; then we split it into cases where we can activate i
+
+ one thing to consider when you're at the root node:
+1) does an optimal sequence activate node i? 
+2) is i already marked? 
+
+so technically, we might need 4 extra tags relating to dp[i], the optimal solution for node i, but actually, the second thing is intrinsic to node i 
+
+dp[i][j] where j = 0 represents optimal cost out of all sequences that don't activate node i, 
+j = 1 represents optimal cost out of all sequences that do activate node i
+
+
+dp[i][1]: if i is already marked, then we can rearrange this 
+
+Let dp[i][j] (defined for 1 <= i <= N and 0 <= j <= 2) be the minimum cost required for all students in 's subtree to end up intending to write the CCC, such that:
+
+j = 0: i will be influenced by its parent (i.e. node i's marked status is set to true)
+j = 1: i will have no particular interaction with its parent
+j = 2: i will influence its parent (i.e. we're taking the optimal cost out of all sequences such that i is in the sequence)
+
+
+note: calculating dp[i][0] was wrong because if there existed a sequence of dp[i][m[child]] such that node child was activated
+(i.e. m[child] == 1), then we don't need. The problem is that when we're computing dp[child][m[child]], where m[child] = 1,
+we don't have any way to isolate the value of dp[child][m[child]] for all sequences that activate child.
+let dp[i][2] be the dp for i's subtree, given that i was marked AND we activate it.
+
+recap: think about the entire subtree where the operations on a child subtree can influence the tree. 
+In our case, sometimes for a node which was alreayd marked, for any given subtree which could have 
+been the one that was going to mark node i, the optimal way to mark node i 

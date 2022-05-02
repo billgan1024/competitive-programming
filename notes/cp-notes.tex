@@ -189,6 +189,15 @@ Key ideas:
           that is accumulated from the parent of a node (\code{up[i] = max(2+max distance from the parent to a node in
           the parent's subtree which is not
           in the original node's subtree, 1+up[parent])})
+    \item Convert edges to graphs: useful if edges also have properties that can be modified throughout the lifetime of the problem.
+\end{itemize}
+
+\subsection{Subtree techniques}
+\begin{itemize}
+    \item a subtree within a particular node's subtree containing that node consists of that node + 
+    a subset of \{subtree within a particular child node's subtree containing that child node\}.
+    This formula can be verified by inducting on the height of a particular tree (for a tree of height $n$, 
+    all subtrees containing the root consist of $...$)
 \end{itemize}
 
 \subsection{Tree DS techniques}

@@ -1,0 +1,9 @@
+in general, given an adjacency list representation of a graph, if we are querying paths, 
+there are n^2 paths by default. However, these paths are overlaid on top of nodes, and we can see that 
+there is a lot of overlap between similar paths which we can use. Thus, to compute the minimum value of 
+f(path), or count sum (or product) of all f(path), the centroid technique exploits the similarities between paths:
+namely, all paths that go through a particular root are either composed of a path starting and ending in
+two different subtrees, where we count the 'null' subtree as a subtree (or the edge case is when ur just selecting the 
+root node). then you can maintain a data structure that can allow you to query parts of the tree which would normally 
+require O(n) time back to O(1) using a data structure.
+

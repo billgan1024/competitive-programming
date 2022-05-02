@@ -1,0 +1,6 @@
+Counting number of steps is equivalent to counting how many times the fetch-execute cycle is run (plus or minus a constant).
+Note that function calls require the setup of a new stack frame which takes O(1) steps, assuming you aren't passing a
+vector by value.
+
+Then, let f(x) be the # of steps from calling dfs on node i. It is roughly equal to # of edges + number of neighbours
+(actually it is just almost equal to 2*# of edges). Thus, dfs runs in linear time.

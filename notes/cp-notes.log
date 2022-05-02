@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021/W32TeX) (preloaded format=xelatex 2021.9.15)  31 DEC 2021 15:01
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021/W32TeX) (preloaded format=xelatex 2021.9.15)  9 JAN 2022 21:02
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -426,17 +426,17 @@ Overfull \hbox (13.37733pt too wide) in paragraph at lines 185--192
 \TU/lmtt/m/n/12 from the parent to a node in the parent's subtree which is not in the original
  []
 
-[3] [4] (./cp-notes.aux)
+[3] [4] [5] (./cp-notes.aux)
 Package rerunfilecheck Info: File `cp-notes.out' has not changed.
-(rerunfilecheck)             Checksum: DDD0EF61CEE6A13344AC8A39ED444ABA;2489.
+(rerunfilecheck)             Checksum: DEBA2D97204EEEED8A1E892F26F49B91;2641.
  ) 
 Here is how much of TeX's memory you used:
  10739 strings out of 476533
  158416 string characters out of 5821544
- 493419 words of memory out of 5000000
+ 493582 words of memory out of 5000000
  30972 multiletter control sequences out of 15000+600000
  408507 words of font info for 55 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  60i,6n,66p,577b,423s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on cp-notes.xdv (4 pages, 93276 bytes).
+Output written on cp-notes.xdv (5 pages, 98620 bytes).

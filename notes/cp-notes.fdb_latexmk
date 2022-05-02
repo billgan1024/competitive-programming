@@ -1,10 +1,10 @@
 # Fdb version 3
-["xdvipdfmx"] 1640980868 "cp-notes.xdv" "cp-notes.pdf" "cp-notes" 1640980869
-  "cp-notes.xdv" 1640980867 93276 6ebe2ab773796929e66a2dee105daa23 "xelatex"
+["xdvipdfmx"] 1641780175 "cp-notes.xdv" "cp-notes.pdf" "cp-notes" 1641780176
+  "cp-notes.xdv" 1641780175 98620 fdcb4cd570dd1a0c21d1803a1c4df81e "xelatex"
   (generated)
   "cp-notes.pdf"
-["xelatex"] 1640980865 "c:/Users/billg/Documents/competitive-programming/notes/cp-notes.tex" "cp-notes.xdv" "cp-notes" 1640980869
-  "c:/Users/billg/Documents/competitive-programming/notes/cp-notes.tex" 1640980864 11014 860374d7d219a1a9f9286fe6ef2a9368 ""
+["xelatex"] 1641780172 "c:/Users/billg/Documents/competitive-programming/notes/cp-notes.tex" "cp-notes.xdv" "cp-notes" 1641780176
+  "c:/Users/billg/Documents/competitive-programming/notes/cp-notes.tex" 1641780170 11581 f349d1c9c1b6879ebfb60376e6e958c9 ""
   "c:/texlive/2021/texmf-dist/fonts/map/fontname/texfonts.map" 1631751982 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "c:/texlive/2021/texmf-dist/fonts/tfm/adobe/zapfding/pzdr.tfm" 1631756211 1528 7e12f4c0fcf5a072cebdcfbfc610f54c ""
   "c:/texlive/2021/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1631747709 1004 54797486969f23fa377b128694d548df ""
@@ -91,11 +91,11 @@
   "c:/texlive/2021/texmf-dist/web2c/texmf.cnf" 1631752877 40042 fe981136cbb5f3715ab1b0e46e3d3892 ""
   "c:/texlive/2021/texmf-var/web2c/xetex/xelatex.fmt" 1631756458 5128179 e50196b373a4ab889252bbab448e3cf3 ""
   "c:/texlive/2021/texmf.cnf" 1631756242 713 e69b156964470283e0530f5060668171 ""
-  "cp-notes.aux" 1640980867 2930 2f33fdf1cabdd48390b38ecf25608dad "xelatex"
-  "cp-notes.out" 1640980867 2489 ddd0ef61cee6a13344ac8a39ed444aba "xelatex"
-  "cp-notes.tex" 1640980864 11014 860374d7d219a1a9f9286fe6ef2a9368 ""
+  "cp-notes.aux" 1641780175 3057 f0b487c276cf23264e6737ca458f1604 "xelatex"
+  "cp-notes.out" 1641780175 2641 deba2d97204eeeed8a1e892f26f49b91 "xelatex"
+  "cp-notes.tex" 1641780170 11581 f349d1c9c1b6879ebfb60376e6e958c9 ""
   (generated)
-  "cp-notes.aux"
   "cp-notes.log"
-  "cp-notes.out"
   "cp-notes.xdv"
+  "cp-notes.aux"
+  "cp-notes.out"
