@@ -15,6 +15,4 @@ typedef pair<int, int> pii;
 
 int main() {
     cin.sync_with_stdio(0); cin.tie(0); 
-    pr(__cplusplus);
-    pr(bit_width(3));
 }

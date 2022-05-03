@@ -1,6 +1,7 @@
 
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
+#include <stdlib.h>
 
 using namespace __gnu_pbds;
 using namespace std;
@@ -26,4 +27,7 @@ template<typename T, typename X> using hash_map = gp_hash_table<T, X>;
 int a[2];
 int main() {
     cin.sync_with_stdio(0); cin.tie(0);
+    ordered_set<int> x;
+    int *p = (int*)malloc(3*sizeof(int));
+    free(p);
 }
